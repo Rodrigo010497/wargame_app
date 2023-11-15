@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html>
+{% load static %}
+<link rel="stylesheet" href="{% static 'style.css' %}">
+<head>
+  <title>{% block title %}{% endblock %}</title>
+  {% load bootstrap5 %}
+  {% bootstrap_css %}
+  {% bootstrap_javascript %}
+</head>
+<body>
+
+<div class="container">
+  <ul class="nav bg-info">
+    <li class="nav-item">
+        <a class="nav-link link-light", href='{% url 'change_view_phase' phases.0 %}'> {{phases.0}} </a>
+    </li>
+    <li class="nav-item">
+     <a class="nav-link link-light", href='{% url 'change_view_phase' phases.1 %}'> {{phases.1}} </a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link link-light", href='{% url 'change_view_phase' phases.2 %}'> {{phases.2}} </a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link link-light", href='{% url 'change_view_phase' phases.3 %}'> {{phases.3}} </a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link link-light", href='{% url 'change_view_phase' phases.4 %}'> {{phases.4}} </a>
+    </li>
+  </ul>
+<div class="row row-cols-1 row-cols-md-3">
+{% for object in army %}
+    <div class="card bg-light mb-3 px-0 mx-2">
+      <div class="card-header"><h5 class="card-title">{{ object.name }}</h5></div>
+      <div class="card-body">
+        <div class="table-responsive">
+                        <table class="table table-bordered">
+                          <thead>
+                            <tr>
+                                {% for key in object.stats.keys %}
+                                  <th scope="col">{{key}}</th>
+                                {% endfor %}
+                            </tr>
+                          </thead>
+                           <tbody>
+                            <tr>
+                              {% for key in object.stats.values %}
+                                <td scope="row">{{key}}</td>
+                              {% endfor %}
+                            </tr>
+                          </tbody>
+                        </table>
+        </div>
+        {% if phase == "shooting" %}
+            <div class="card bg-light mb-3">
+              <div class="card-header"><h5 class="card-title">{{ object.equiped_ranged.0 }}</h5></div>
+              <div class="card-body">
+                <div class="table-responsive">
+                                <table class="table table-bordered">
+                                  <thead>
+                                    <tr>
+                                        {% for key in object.equiped_ranged.1.keys %}
+                                          <th scope="col">{{key}}</th>
+                                        {% endfor %}
+                                    </tr>
+                                  </thead>
+                                   <tbody>
+                                    <tr>
+                                      {% for key in object.equiped_ranged.1.values %}
+                                        <td scope="row"; white-space: nowrap>{{key}}</td>
+                                      {% endfor %}
+                                    </tr>
+                                  </tbody>
+                                </table>
+                </div>
+            </div>
+        </div>
+        {% endif %}
+      </div>
+    </div>
+{% endfor %}
+</div>
+  {% block content %}
+  {% endblock %}
+</div>
+</body>
+</html>
